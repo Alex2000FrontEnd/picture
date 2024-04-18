@@ -96,11 +96,14 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_modals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/modals */ "./src/js/modules/modals.js");
+/* harmony import */ var _modules_showMore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/showMore */ "./src/js/modules/showMore.js");
+
 
 window.addEventListener('DOMContentLoaded', () => {
   'use strict';
 
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  Object(_modules_showMore__WEBPACK_IMPORTED_MODULE_1__["default"])('.button-styles', '.styles-2');
 });
 
 /***/ }),
@@ -185,6 +188,28 @@ const scrollSize = () => {
   return scrollWidth;
 };
 /* harmony default export */ __webpack_exports__["default"] = (scrollSize);
+
+/***/ }),
+
+/***/ "./src/js/modules/showMore.js":
+/*!************************************!*\
+  !*** ./src/js/modules/showMore.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const showMore = (triggerSelector, elementsSelector) => {
+  const trigger = document.querySelector(triggerSelector);
+  trigger.addEventListener('click', () => {
+    document.querySelectorAll(elementsSelector).forEach(el => {
+      el.style.cssText = 'display: block !important;';
+    });
+    trigger.remove();
+  });
+};
+/* harmony default export */ __webpack_exports__["default"] = (showMore);
 
 /***/ })
 

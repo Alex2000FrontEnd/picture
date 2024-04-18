@@ -97,6 +97,8 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_modals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/modals */ "./src/js/modules/modals.js");
 /* harmony import */ var _modules_showMore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/showMore */ "./src/js/modules/showMore.js");
+/* harmony import */ var _modules_tabsFilter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabsFilter */ "./src/js/modules/tabsFilter.js");
+
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -104,6 +106,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_0__["default"])();
   Object(_modules_showMore__WEBPACK_IMPORTED_MODULE_1__["default"])('.button-styles', '.styles-2');
+  Object(_modules_tabsFilter__WEBPACK_IMPORTED_MODULE_2__["default"])('.portfolio-menu', 'li', '.portfolio-wrapper', '.portfolio-block', '.portfolio-no', 'active');
 });
 
 /***/ }),
@@ -210,6 +213,55 @@ const showMore = (triggerSelector, elementsSelector) => {
   });
 };
 /* harmony default export */ __webpack_exports__["default"] = (showMore);
+
+/***/ }),
+
+/***/ "./src/js/modules/tabsFilter.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/tabsFilter.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const tabsFilter = (wrapperMenuSelector, menusSelector, wrapperContentSelector, contentsSelector, noContentSelector, activeClass) => {
+  const wrapperMenu = document.querySelector(wrapperMenuSelector),
+    menus = wrapperMenu.querySelectorAll(menusSelector),
+    wrapperContent = document.querySelector(wrapperContentSelector),
+    contents = wrapperContent.querySelectorAll(contentsSelector),
+    noContent = document.querySelector(noContentSelector);
+  const showFilteredTabs = filterName => {
+    menus.forEach(menu => {
+      if (!menu.classList.contains(filterName)) {
+        menu.classList.remove(activeClass);
+      } else {
+        menu.classList.add(activeClass);
+      }
+    });
+    let numberOfTabsShown = 0;
+    contents.forEach(content => {
+      if (!content.classList.contains(filterName)) {
+        content.style.display = 'none';
+      } else {
+        content.style.display = 'block';
+        numberOfTabsShown++;
+      }
+    });
+    if (numberOfTabsShown === 0) {
+      noContent.style.display = 'block';
+    } else {
+      noContent.style.dispaly = 'none';
+    }
+  };
+  wrapperMenu.addEventListener('click', e => {
+    const t = e.target;
+    if (t && t.matches('li')) {
+      showFilteredTabs(t.classList[0]);
+    }
+  });
+};
+/* harmony default export */ __webpack_exports__["default"] = (tabsFilter);
 
 /***/ })
 

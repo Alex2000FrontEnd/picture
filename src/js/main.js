@@ -1,6 +1,7 @@
 import modals from './modules/modals';
 import showMore from './modules/showMore';
 import tabsFilter from './modules/tabsFilter';
+import showImgs from './modules/showImgs';
 
 window.addEventListener('DOMContentLoaded', () => {
     'use strict';
@@ -17,4 +18,6 @@ window.addEventListener('DOMContentLoaded', () => {
         '.portfolio-no',
         'active'
     );
+
+    showImgs('.sizes-block');
 });

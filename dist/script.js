@@ -98,6 +98,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_modals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/modals */ "./src/js/modules/modals.js");
 /* harmony import */ var _modules_showMore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/showMore */ "./src/js/modules/showMore.js");
 /* harmony import */ var _modules_tabsFilter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabsFilter */ "./src/js/modules/tabsFilter.js");
+/* harmony import */ var _modules_showImgs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/showImgs */ "./src/js/modules/showImgs.js");
+
 
 
 
@@ -107,6 +109,7 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_0__["default"])();
   Object(_modules_showMore__WEBPACK_IMPORTED_MODULE_1__["default"])('.button-styles', '.styles-2');
   Object(_modules_tabsFilter__WEBPACK_IMPORTED_MODULE_2__["default"])('.portfolio-menu', 'li', '.portfolio-wrapper', '.portfolio-block', '.portfolio-no', 'active');
+  Object(_modules_showImgs__WEBPACK_IMPORTED_MODULE_3__["default"])('.sizes-block');
 });
 
 /***/ }),
@@ -191,6 +194,49 @@ const scrollSize = () => {
   return scrollWidth;
 };
 /* harmony default export */ __webpack_exports__["default"] = (scrollSize);
+
+/***/ }),
+
+/***/ "./src/js/modules/showImgs.js":
+/*!************************************!*\
+  !*** ./src/js/modules/showImgs.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const showImgs = contentsSelector => {
+  const contents = document.querySelectorAll(contentsSelector),
+    imgs = document.querySelectorAll(`${contentsSelector} img`),
+    imgsSrcPlacholder = [],
+    imgsSrcImg = [];
+  contents.forEach(item => {
+    const img = item.querySelector('img'),
+      src = img.getAttribute('src');
+    imgsSrcPlacholder.push(src);
+  });
+  imgsSrcPlacholder.forEach(item => {
+    let srcImg = item.slice(0, item.indexOf('.'));
+    srcImg += '-1.png';
+    imgsSrcImg.push(srcImg);
+  });
+  contents.forEach((content, i) => {
+    content.addEventListener('mouseover', e => {
+      if (e.target.closest(contentsSelector)) {
+        imgs[i].setAttribute('src', imgsSrcImg[i]);
+        imgs[i].classList.add('img-show');
+      }
+    });
+    content.addEventListener('mouseout', e => {
+      if (e.target.closest(contentsSelector)) {
+        imgs[i].setAttribute('src', imgsSrcPlacholder[i]);
+        imgs[i].classList.remove('img-show');
+      }
+    });
+  });
+};
+/* harmony default export */ __webpack_exports__["default"] = (showImgs);
 
 /***/ }),
 

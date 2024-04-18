@@ -202,14 +202,21 @@ const modals = () => {
     localStorage.setItem('gift', false);
     triggerGift.remove();
   }
+  let idInterval;
   function bindModal(triggersSelector, modalSelector) {
     const triggers = document.querySelectorAll(triggersSelector),
       modal = document.querySelector(modalSelector),
       scrollWidth = Object(_scrollSize__WEBPACK_IMPORTED_MODULE_0__["default"])();
+    if (modal.classList.contains('popup-consultation')) {
+      idInterval = setTimeout(() => {
+        showModal();
+      }, 3000);
+    }
     function showModal() {
       modal.style.display = 'block';
       document.body.style.overflow = 'hidden';
       document.body.style.marginRight = `${scrollWidth}px`;
+      clearInterval(idInterval);
     }
     function hideModal() {
       modal.style.display = 'none';

@@ -2,6 +2,7 @@ import modals from './modules/modals';
 import showMore from './modules/showMore';
 import tabsFilter from './modules/tabsFilter';
 import showImgs from './modules/showImgs';
+import accordion from './modules/accordion';
 
 window.addEventListener('DOMContentLoaded', () => {
     'use strict';
@@ -20,4 +21,6 @@ window.addEventListener('DOMContentLoaded', () => {
     );
 
     showImgs('.sizes-block');
+
+    accordion();
 });

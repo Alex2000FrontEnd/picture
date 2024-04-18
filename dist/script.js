@@ -99,6 +99,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_showMore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/showMore */ "./src/js/modules/showMore.js");
 /* harmony import */ var _modules_tabsFilter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabsFilter */ "./src/js/modules/tabsFilter.js");
 /* harmony import */ var _modules_showImgs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/showImgs */ "./src/js/modules/showImgs.js");
+/* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
+
 
 
 
@@ -110,7 +112,52 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_showMore__WEBPACK_IMPORTED_MODULE_1__["default"])('.button-styles', '.styles-2');
   Object(_modules_tabsFilter__WEBPACK_IMPORTED_MODULE_2__["default"])('.portfolio-menu', 'li', '.portfolio-wrapper', '.portfolio-block', '.portfolio-no', 'active');
   Object(_modules_showImgs__WEBPACK_IMPORTED_MODULE_3__["default"])('.sizes-block');
+  Object(_modules_accordion__WEBPACK_IMPORTED_MODULE_4__["default"])();
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/accordion.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/accordion.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const accordion = () => {
+  const wrapper = document.querySelector('#often-questions'),
+    heads = wrapper.querySelectorAll('.accordion-heading'),
+    contents = wrapper.querySelectorAll('.accordion-block');
+  const hide = () => {
+    heads.forEach(head => {
+      head.classList.remove('ui-accordion-header-active');
+    });
+    contents.forEach(content => {
+      content.style.display = 'none';
+      content.classList.remove('active');
+    });
+  };
+  const show = i => {
+    heads[i].classList.add('ui-accordion-header-active');
+    contents[i].style.display = 'block';
+    contents[i].classList.add('active');
+  };
+  hide();
+  wrapper.addEventListener('click', e => {
+    const t = e.target;
+    if (t && t.parentElement.classList.contains('accordion-heading')) {
+      heads.forEach((head, i) => {
+        if (t.parentElement === head) {
+          hide();
+          show(i);
+        }
+      });
+    }
+  });
+};
+/* harmony default export */ __webpack_exports__["default"] = (accordion);
 
 /***/ }),
 

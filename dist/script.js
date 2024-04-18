@@ -90,10 +90,90 @@
 /*!************************!*\
   !*** ./src/js/main.js ***!
   \************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modules_modals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/modals */ "./src/js/modules/modals.js");
 
+window.addEventListener('DOMContentLoaded', () => {
+  'use strict';
+
+  Object(_modules_modals__WEBPACK_IMPORTED_MODULE_0__["default"])();
+});
+
+/***/ }),
+
+/***/ "./src/js/modules/modals.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/modals.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _scrollSize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./scrollSize */ "./src/js/modules/scrollSize.js");
+
+const modals = () => {
+  const bindModal = (triggersSelector, modalSelector) => {
+    const triggers = document.querySelectorAll(triggersSelector),
+      modal = document.querySelector(modalSelector),
+      scrollWidth = Object(_scrollSize__WEBPACK_IMPORTED_MODULE_0__["default"])();
+    const showModal = () => {
+      document.body.style.overflow = 'hidden';
+      document.body.style.marginRight = `${scrollWidth}px`;
+      modal.style.display = 'block';
+    };
+    const hideModal = () => {
+      document.body.style.overflow = '';
+      document.body.style.marginRight = '0px';
+      modal.style.display = 'none';
+    };
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        showModal();
+      });
+    });
+    modal.addEventListener('click', e => {
+      const t = e.target;
+      if (t && (t.matches('[data-close]') || t === modal)) {
+        hideModal();
+      }
+    });
+  };
+  bindModal('.button-design', '.popup-design');
+  bindModal('.button-consultation', '.popup-consultation');
+};
+/* harmony default export */ __webpack_exports__["default"] = (modals);
+
+/***/ }),
+
+/***/ "./src/js/modules/scrollSize.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/scrollSize.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const scrollSize = () => {
+  const div = document.createElement('div');
+  div.style.cssText = `
+        width: 50px;
+        height: 50px;
+        overflow: scroll;
+        visibility: hidden;
+        position: fixed;
+    `;
+  document.body.append(div);
+  const scrollWidth = div.offsetWidth - div.clientWidth;
+  div.remove();
+  return scrollWidth;
+};
+/* harmony default export */ __webpack_exports__["default"] = (scrollSize);
 
 /***/ })
 

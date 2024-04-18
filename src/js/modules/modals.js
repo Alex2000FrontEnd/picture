@@ -22,6 +22,11 @@ const modals = () => {
         triggers.forEach(trigger => {
             trigger.addEventListener('click', () => {
                 showModal();
+
+                if (trigger.classList.contains('fixed-gift')) {
+                    localStorage.setItem('gift_received', true);
+                    trigger.remove();
+                }
             });
         });
 
@@ -36,6 +41,15 @@ const modals = () => {
 
     bindModal('.button-design', '.popup-design');
     bindModal('.button-consultation', '.popup-consultation');
+    bindModal('.fixed-gift', '.popup-gift');
+
+    const showPresent = () => {
+        if (localStorage.getItem('gift_received')) {
+            document.querySelector('.fixed-gift').remove();
+        }
+    };
+
+    showPresent();
 };
 
 export default modals;

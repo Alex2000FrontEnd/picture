@@ -119,6 +119,11 @@ h4 {
   font-family: 'Circe Bold', sans-serif;
   font-size: 1.5rem;
 }
+@media(min-width: 992px) {
+  .header .burger-menu {
+    display: none !important;
+  }
+}
 .header .burger img {
   width: 2rem;
   height: 2rem;

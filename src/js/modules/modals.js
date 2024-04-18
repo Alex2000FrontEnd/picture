@@ -2,8 +2,7 @@ import scrollSize from './scrollSize';
 
 const modals = () => {
 
-    const triggerGift = document.querySelector('.fixed-gift'),
-          giftModal = document.querySelector('.popup-gift');
+    const triggerGift = document.querySelector('.fixed-gift');
 
     if (localStorage.getItem('gift')) {
         triggerGift.remove();
@@ -48,11 +47,11 @@ const modals = () => {
               modal = document.querySelector(modalSelector),
               scrollWidth = scrollSize();
 
-        if (modal.classList.contains('popup-consultation')) {
+/*         if (modal.classList.contains('popup-consultation')) {
             idInterval = setTimeout(() => {
                 showModal();
             }, 3000);
-        }
+        } */
 
         function showModal() {
             modal.style.display = 'block';

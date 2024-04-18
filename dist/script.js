@@ -100,6 +100,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_tabsFilter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabsFilter */ "./src/js/modules/tabsFilter.js");
 /* harmony import */ var _modules_showImgs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/showImgs */ "./src/js/modules/showImgs.js");
 /* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
+/* harmony import */ var _modules_burger__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/burger */ "./src/js/modules/burger.js");
+
 
 
 
@@ -113,6 +115,7 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_tabsFilter__WEBPACK_IMPORTED_MODULE_2__["default"])('.portfolio-menu', 'li', '.portfolio-wrapper', '.portfolio-block', '.portfolio-no', 'active');
   Object(_modules_showImgs__WEBPACK_IMPORTED_MODULE_3__["default"])('.sizes-block');
   Object(_modules_accordion__WEBPACK_IMPORTED_MODULE_4__["default"])();
+  Object(_modules_burger__WEBPACK_IMPORTED_MODULE_5__["default"])();
 });
 
 /***/ }),
@@ -161,6 +164,31 @@ const accordion = () => {
 
 /***/ }),
 
+/***/ "./src/js/modules/burger.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/burger.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const burger = () => {
+  const hamburger = document.querySelector('.burger'),
+    menu = document.querySelector('.burger-menu');
+  hamburger.addEventListener('click', () => {
+    const display = window.getComputedStyle(menu).display;
+    if (display === 'none') {
+      menu.style.display = 'block';
+    } else {
+      menu.style.display = 'none';
+    }
+  });
+};
+/* harmony default export */ __webpack_exports__["default"] = (burger);
+
+/***/ }),
+
 /***/ "./src/js/modules/modals.js":
 /*!**********************************!*\
   !*** ./src/js/modules/modals.js ***!
@@ -173,8 +201,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scrollSize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./scrollSize */ "./src/js/modules/scrollSize.js");
 
 const modals = () => {
-  const triggerGift = document.querySelector('.fixed-gift'),
-    giftModal = document.querySelector('.popup-gift');
+  const triggerGift = document.querySelector('.fixed-gift');
   if (localStorage.getItem('gift')) {
     triggerGift.remove();
   }
@@ -207,11 +234,13 @@ const modals = () => {
     const triggers = document.querySelectorAll(triggersSelector),
       modal = document.querySelector(modalSelector),
       scrollWidth = Object(_scrollSize__WEBPACK_IMPORTED_MODULE_0__["default"])();
-    if (modal.classList.contains('popup-consultation')) {
-      idInterval = setTimeout(() => {
-        showModal();
-      }, 3000);
-    }
+
+    /*         if (modal.classList.contains('popup-consultation')) {
+                idInterval = setTimeout(() => {
+                    showModal();
+                }, 3000);
+            } */
+
     function showModal() {
       modal.style.display = 'block';
       document.body.style.overflow = 'hidden';

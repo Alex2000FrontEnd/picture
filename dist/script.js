@@ -173,6 +173,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scrollSize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./scrollSize */ "./src/js/modules/scrollSize.js");
 
 const modals = () => {
+  let idInterval;
   const bindModal = (triggersSelector, modalSelector) => {
     const triggers = document.querySelectorAll(triggersSelector),
       modal = document.querySelector(modalSelector),
@@ -181,6 +182,9 @@ const modals = () => {
       document.body.style.overflow = 'hidden';
       document.body.style.marginRight = `${scrollWidth}px`;
       modal.style.display = 'block';
+      if (idInterval) {
+        clearInterval(idInterval);
+      }
     };
     const hideModal = () => {
       document.body.style.overflow = '';
@@ -190,10 +194,6 @@ const modals = () => {
     triggers.forEach(trigger => {
       trigger.addEventListener('click', () => {
         showModal();
-        if (trigger.classList.contains('fixed-gift')) {
-          localStorage.setItem('gift_received', true);
-          trigger.remove();
-        }
       });
     });
     modal.addEventListener('click', e => {
@@ -202,16 +202,14 @@ const modals = () => {
         hideModal();
       }
     });
+
+    /*         if (modal.classList.contains('popup-consultation')) {
+                idInterval = setTimeout(showModal, 60000);
+            } */
   };
   bindModal('.button-design', '.popup-design');
   bindModal('.button-consultation', '.popup-consultation');
   bindModal('.fixed-gift', '.popup-gift');
-  const showPresent = () => {
-    if (localStorage.getItem('gift_received')) {
-      document.querySelector('.fixed-gift').remove();
-    }
-  };
-  showPresent();
 };
 /* harmony default export */ __webpack_exports__["default"] = (modals);
 

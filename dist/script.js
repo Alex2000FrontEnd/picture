@@ -276,7 +276,7 @@ const modals = () => {
     });
     modal.addEventListener('click', e => {
       const t = e.target;
-      if (t && t.closest('[data-close]') || t === modal) {
+      if (t && t.closest('.popup-close') || t === modal) {
         hideModal();
       }
     });
@@ -406,6 +406,7 @@ function sliders({
   if (orientation) {
     if (orientation === 'vertical') {
       orientation = 'block';
+      currentSlide = slides.length;
     } else if (orientation === 'horizontal') {
       orientation = 'flex';
     }
@@ -419,14 +420,16 @@ function sliders({
       inner.style.cssText = `
                 display: ${orientation};
                 height: ${slideHeight * slides.length}px;
-                transition: all 1s;
+                transform: translateY(-${(currentSlide - 1) * slideHeight}px);
             `;
       slides.forEach(slide => {
         slide.style.height = `${slideHeight}px`;
       });
+      setTimeout(() => {
+        inner.style.transition = 'all 1s';
+      }, 100);
     } else if (orientation === 'flex') {
       slider.style.cssText = `
-                width: ${slideWidth}px;
                 overflow: hidden;
             `;
       inner.style.cssText = `

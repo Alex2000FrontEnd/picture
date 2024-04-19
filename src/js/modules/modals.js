@@ -80,7 +80,7 @@ const modals = () => {
         modal.addEventListener('click', (e) => {
             const t = e.target;
 
-            if (t && t.closest('[data-close]') || t === modal) {
+            if (t && t.closest('.popup-close') || t === modal) {
                 hideModal();
             }
         });

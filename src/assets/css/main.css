@@ -1754,3 +1754,8 @@ h4 {
   position: relative;
   z-index: 5;
 }
+
+.slider-inner {
+  overflow: hidden;
+  display: flex;
+}

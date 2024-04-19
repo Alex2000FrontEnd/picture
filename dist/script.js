@@ -101,6 +101,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_showImgs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/showImgs */ "./src/js/modules/showImgs.js");
 /* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
 /* harmony import */ var _modules_burger__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/burger */ "./src/js/modules/burger.js");
+/* harmony import */ var _modules_sliders__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/sliders */ "./src/js/modules/sliders.js");
+
 
 
 
@@ -116,6 +118,12 @@ window.addEventListener('DOMContentLoaded', () => {
   Object(_modules_showImgs__WEBPACK_IMPORTED_MODULE_3__["default"])('.sizes-block');
   Object(_modules_accordion__WEBPACK_IMPORTED_MODULE_4__["default"])();
   Object(_modules_burger__WEBPACK_IMPORTED_MODULE_5__["default"])();
+  Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_6__["default"])({
+    sliderSelector: '.main-slider',
+    slidesSelector: '.main-slider-item',
+    orientation: 'vertical',
+    autoplay: 4000
+  });
 });
 
 /***/ }),
@@ -364,6 +372,90 @@ const showMore = (triggerSelector, elementsSelector) => {
   });
 };
 /* harmony default export */ __webpack_exports__["default"] = (showMore);
+
+/***/ }),
+
+/***/ "./src/js/modules/sliders.js":
+/*!***********************************!*\
+  !*** ./src/js/modules/sliders.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function sliders({
+  sliderSelector,
+  slidesSelector,
+  orientation,
+  autoplay
+}) {
+  const slider = document.querySelector(sliderSelector),
+    inner = slider.querySelector('.slider-inner'),
+    slides = slider.querySelectorAll(slidesSelector);
+  let slideHeight = slides[0].clientHeight,
+    currentSlide = 1,
+    delay = autoplay;
+  if (orientation) {
+    if (orientation === 'vertical') {
+      orientation = 'block';
+    } else if (orientation === 'horizontal') {
+      orientation = 'flex';
+    }
+  }
+  function createSlider() {
+    slider.style.cssText = `
+            height: ${slideHeight}px;
+            overflow: hidden;
+        `;
+    inner.style.cssText = `
+            display: ${orientation};
+            height: ${slideHeight * slides.length}px;
+            transition: all 1s;
+        `;
+  }
+  createSlider();
+  function switchSlide(n) {
+    currentSlide += n;
+    if (currentSlide > slides.length) {
+      currentSlide = 1;
+    }
+    if (currentSlide < 1) {
+      currentSlide = slides.length;
+    }
+    let height = Math.round(currentSlide * slideHeight - slideHeight);
+    inner.style.transform = `translateY(-${height + 2}px)`;
+  }
+  slider.addEventListener('click', e => {
+    const t = e.target;
+    if (t && t.closest('.main-prev-btn')) {
+      switchSlide(1);
+    }
+    if (t && t.closest('.main-next-btn')) {
+      switchSlide(-1);
+    }
+  });
+
+  ////////////
+  let idInterval;
+  function startAutoplay() {
+    idInterval = setInterval(() => {
+      switchSlide(-1);
+    }, delay);
+  }
+  if (autoplay) {
+    startAutoplay();
+    slider.addEventListener('mouseover', () => {
+      clearInterval(idInterval);
+      console.log('stop');
+    });
+    slider.addEventListener('mouseleave', () => {
+      startAutoplay();
+      console.log('start');
+    });
+  }
+}
+/* harmony default export */ __webpack_exports__["default"] = (sliders);
 
 /***/ }),
 

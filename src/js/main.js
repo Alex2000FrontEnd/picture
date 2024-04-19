@@ -4,6 +4,7 @@ import tabsFilter from './modules/tabsFilter';
 import showImgs from './modules/showImgs';
 import accordion from './modules/accordion';
 import burger from './modules/burger';
+import sliders from './modules/sliders';
 
 window.addEventListener('DOMContentLoaded', () => {
     'use strict';
@@ -26,4 +27,11 @@ window.addEventListener('DOMContentLoaded', () => {
     accordion();
 
     burger();
+
+    sliders({
+        sliderSelector: '.main-slider',
+        slidesSelector: '.main-slider-item',
+        orientation: 'vertical',
+        autoplay: 4000
+    });
 });

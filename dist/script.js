@@ -102,6 +102,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
 /* harmony import */ var _modules_burger__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/burger */ "./src/js/modules/burger.js");
 /* harmony import */ var _modules_sliders__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/sliders */ "./src/js/modules/sliders.js");
+/* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
+
 
 
 
@@ -130,6 +132,7 @@ window.addEventListener('DOMContentLoaded', () => {
     orientation: 'horizontal',
     autoplay: 4000
   });
+  Object(_modules_forms__WEBPACK_IMPORTED_MODULE_7__["default"])();
 });
 
 /***/ }),
@@ -200,6 +203,93 @@ const burger = () => {
   });
 };
 /* harmony default export */ __webpack_exports__["default"] = (burger);
+
+/***/ }),
+
+/***/ "./src/js/modules/forms.js":
+/*!*********************************!*\
+  !*** ./src/js/modules/forms.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services/services */ "./src/js/modules/services/services.js");
+/* harmony import */ var _phoneValidation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./phoneValidation */ "./src/js/modules/phoneValidation.js");
+
+
+const forms = () => {
+  const formAll = document.querySelectorAll('form'),
+    inputsPhone = document.querySelectorAll('[name="phone"]'),
+    inputsName = document.querySelectorAll('[name="name"]'),
+    inputsMessage = document.querySelectorAll('[name="message"]');
+  inputsPhone.forEach(phone => {
+    Object(_phoneValidation__WEBPACK_IMPORTED_MODULE_1__["default"])(phone);
+  });
+  inputsName.forEach(name => {
+    name.addEventListener('input', () => {
+      name.value = name.value.replace(/^[A-Za-z]+$/gi, '');
+    });
+  });
+  inputsMessage.forEach(name => {
+    name.addEventListener('input', () => {
+      name.value = name.value.replace(/^[A-Za-z]+$/gi, '');
+    });
+  });
+  formAll.forEach(form => {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const showLoadStage = {
+        formContent: form.closest('.popup-content'),
+        button: form.querySelector('button'),
+        popupSuccess: `
+                    <div class=popup-content data-popup-message>
+                        <button class=popup-close>&times;</button>
+                        <h4>Спасибо! Скоро мы с вами свяжемся</h4>
+                    </div>
+                `,
+        popupFailure: `
+                    <div class=popup-content data-popup-message>
+                        <button class=popup-close>&times;</button>
+                        <h4>Ошибка! Пожалуйста попробуйте позже...</h4>
+                    </div>
+                `,
+        loading: function () {
+          this.button.classList.add('active');
+          this.formContent.style.pointerEvents = 'none';
+        },
+        success: function () {
+          this.formContent.style.display = 'none';
+          this.formContent.parentElement.insertAdjacentHTML('beforeend', this.popupSuccess);
+        },
+        failure: function () {
+          this.formContent.style.display = 'none';
+          this.formContent.parentElement.insertAdjacentHTML('beforeend', this.popupFailure);
+        },
+        ending: function () {
+          this.formContent.parentElement.querySelectorAll('[data-popup-message]').forEach(item => item.remove());
+          this.formContent.style.display = 'block';
+          this.button.classList.remove('active');
+          this.formContent.style.pointerEvents = '';
+        }
+      };
+      showLoadStage.loading();
+      const formData = new FormData(form);
+      Object(_services_services__WEBPACK_IMPORTED_MODULE_0__["default"])('assets/server.php', formData).then(() => {
+        showLoadStage.success();
+      }).catch(() => {
+        showLoadStage.failure();
+      }).finally(() => {
+        setTimeout(() => {
+          showLoadStage.ending();
+          form.reset();
+        }, 3000);
+      });
+    });
+  });
+};
+/* harmony default export */ __webpack_exports__["default"] = (forms);
 
 /***/ }),
 
@@ -289,6 +379,30 @@ const modals = () => {
 
 /***/ }),
 
+/***/ "./src/js/modules/phoneValidation.js":
+/*!*******************************************!*\
+  !*** ./src/js/modules/phoneValidation.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const phoneValidation = input => {
+  input.addEventListener('input', () => {
+    input.value = input.value.replace(/(?!\+7)\D/, '');
+    if (input.value.length > 11) {
+      input.value = input.value.slice(0, 12);
+    }
+    if (input.value.length < 2) {
+      input.value = '+7' + input.value;
+    }
+  });
+};
+/* harmony default export */ __webpack_exports__["default"] = (phoneValidation);
+
+/***/ }),
+
 /***/ "./src/js/modules/scrollSize.js":
 /*!**************************************!*\
   !*** ./src/js/modules/scrollSize.js ***!
@@ -313,6 +427,26 @@ const scrollSize = () => {
   return scrollWidth;
 };
 /* harmony default export */ __webpack_exports__["default"] = (scrollSize);
+
+/***/ }),
+
+/***/ "./src/js/modules/services/services.js":
+/*!*********************************************!*\
+  !*** ./src/js/modules/services/services.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const postData = async (url, body) => {
+  let res = await fetch(url, {
+    method: 'POST',
+    body: body
+  });
+  return await res.text();
+};
+/* harmony default export */ __webpack_exports__["default"] = (postData);
 
 /***/ }),
 

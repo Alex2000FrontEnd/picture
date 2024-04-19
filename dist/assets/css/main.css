@@ -1762,3 +1762,22 @@ h4 {
   overflow: hidden;
   display: flex;
 }
+
+[data-modal] .button.button-order.active {
+  position: relative;
+}
+
+[data-modal] .button.button-order.active span {
+  opacity: 0;
+}
+
+[data-modal] .button.button-order.active::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  transform: translate(-50%, -50%);
+  background: url(../img/spinner.gif) center center/contain no-repeat;
+}

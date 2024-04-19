@@ -5,6 +5,7 @@ import showImgs from './modules/showImgs';
 import accordion from './modules/accordion';
 import burger from './modules/burger';
 import sliders from './modules/sliders';
+import forms from './modules/forms';
 
 window.addEventListener('DOMContentLoaded', () => {
     'use strict';
@@ -41,4 +42,6 @@ window.addEventListener('DOMContentLoaded', () => {
         orientation: 'horizontal',
         autoplay: 4000
     });
+
+    forms();
 });

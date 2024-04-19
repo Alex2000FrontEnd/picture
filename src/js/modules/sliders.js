@@ -9,6 +9,7 @@ function sliders({
           slides = slider.querySelectorAll(slidesSelector);
 
     let slideHeight = slides[0].clientHeight,
+        slideWidth = slider.clientWidth,
         currentSlide = 1,
         delay = autoplay;
 
@@ -21,15 +22,33 @@ function sliders({
     }
 
     function createSlider() {
-        slider.style.cssText = `
-            height: ${slideHeight}px;
-            overflow: hidden;
-        `;
-        inner.style.cssText = `
-            display: ${orientation};
-            height: ${slideHeight * slides.length}px;
-            transition: all 1s;
-        `;
+        if (orientation === 'block') {
+            slider.style.cssText = `
+                height: ${slideHeight}px;
+                overflow: hidden;
+            `;
+            inner.style.cssText = `
+                display: ${orientation};
+                height: ${slideHeight * slides.length}px;
+                transition: all 1s;
+            `;
+            slides.forEach(slide => {
+                slide.style.height = `${slideHeight}px`;
+            });
+        } else if (orientation === 'flex') {
+                slider.style.cssText = `
+                width: ${slideWidth}px;
+                overflow: hidden;
+            `;
+            inner.style.cssText = `
+                display: ${orientation};
+                width: ${slideWidth * slides.length}px;
+                transition: all 1s;
+            `;
+            slides.forEach(slide => {
+                slide.style.width = `${slideWidth}px`;
+            });
+        }
     }
 
     createSlider();
@@ -44,19 +63,34 @@ function sliders({
             currentSlide = slides.length;
         }
 
-        let height = Math.round((currentSlide * slideHeight) - slideHeight);
+        if (orientation === 'block') {
+            let height = Math.round((currentSlide * slideHeight) - slideHeight);
 
-        inner.style.transform = `translateY(-${height + 2}px)`;
+            inner.style.transform = `translateY(-${height + 2}px)`;
+        } else if (orientation === 'flex') {
+            let width = Math.round((currentSlide * slideWidth) - slideWidth);
+
+            inner.style.transform = `translateX(-${width}px)`;
+        }
     }
 
     slider.addEventListener('click', (e) => {
         const t = e.target;
 
-        if (t && t.closest('.main-prev-btn')) {
-            switchSlide(1);
-        }
-        if (t && t.closest('.main-next-btn')) {
-            switchSlide(-1);
+        if (orientation === 'block') {
+            if (t && t.closest('.main-prev-btn')) {
+                switchSlide(1);
+            }
+            if (t && t.closest('.main-next-btn')) {
+                switchSlide(-1);
+            }
+        } else if (orientation === 'flex') {
+            if (t && t.closest('.main-prev-btn')) {
+                switchSlide(-1);
+            }
+            if (t && t.closest('.main-next-btn')) {
+                switchSlide(1);
+            }
         }
     });
 
@@ -65,7 +99,11 @@ function sliders({
 
     function startAutoplay() {
         idInterval = setInterval(() => {
-            switchSlide(-1);
+            if (orientation === 'block') {
+                switchSlide(-1);
+            } else if (orientation === 'flex') {
+                switchSlide(1);
+            }
         }, delay);
     }
 
@@ -74,13 +112,10 @@ function sliders({
     
         slider.addEventListener('mouseover', () => {
             clearInterval(idInterval);
-            console.log('stop');
-
         });
       
         slider.addEventListener('mouseleave', () => {
             startAutoplay();
-            console.log('start');
         });
     }
 }

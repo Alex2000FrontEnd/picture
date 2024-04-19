@@ -34,4 +34,11 @@ window.addEventListener('DOMContentLoaded', () => {
         orientation: 'vertical',
         autoplay: 4000
     });
+
+    sliders({
+        sliderSelector: '.feedback-slider',
+        slidesSelector: '.feedback-slider-item',
+        orientation: 'horizontal',
+        autoplay: 4000
+    });
 });
